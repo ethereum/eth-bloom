@@ -55,3 +55,30 @@ class BloomFilter(numbers.Number):
 
     def __index__(self):
         return operator.index(self.value)
+
+    def _combine(self, other):
+        if not isinstance(other, BloomFilter):
+            raise TypeError(
+                "The `or` operator is only supported for other `BloomFilter` instances"
+            )
+        return BloomFilter(int(self) | int(other))
+
+    def __or__(self, other):
+        return self._combine(other)
+
+    def __add__(self, other):
+        return self._combine(other)
+
+    def _icombine(self, other):
+        if not isinstance(other, BloomFilter):
+            raise TypeError(
+                "The `or` operator is only supported for other `BloomFilter` instances"
+            )
+        self.value |= int(other)
+        return self
+
+    def __ior__(self, other):
+        return self._icombine(other)
+
+    def __iadd__(self, other):
+        return self._icombine(other)
