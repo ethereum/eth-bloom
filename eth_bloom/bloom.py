@@ -1,5 +1,8 @@
 from __future__ import absolute_import
 
+import operator
+import numbers
+
 try:
     from sha3 import keccak_256
 except ImportError:
@@ -27,7 +30,7 @@ def get_bloom_bits(value):
         yield bloom_bits
 
 
-class BloomFilter(object):
+class BloomFilter(numbers.Number):
     value = None
 
     def __init__(self, value=0):
@@ -49,3 +52,6 @@ class BloomFilter(object):
             self.value & bloom_bits
             for bloom_bits in get_bloom_bits(value)
         )
+
+    def __index__(self):
+        return operator.index(self.value)
