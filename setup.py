@@ -13,7 +13,7 @@ readme = open(os.path.join(DIR, 'README.md')).read()
 
 setup(
     name='ethereum-bloom',
-    version="0.3.0",
+    version="0.4.0",
     description="""Python implementation of the Ethereum Trie structure""",
     long_description=readme,
     author='Piper Merriam',
