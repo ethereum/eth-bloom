@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+import itertools
+
 from hypothesis import (
     strategies as st,
     given,
@@ -18,8 +20,15 @@ log_entry = st.tuples(address, topics)
 log_entries = st.lists(log_entry, min_size=0, max_size=30)
 
 
+def check_bloom(bloom, log_entries):
+    for address, topics in log_entries:
+        assert address in bloom
+        for topic in topics:
+            assert topic in bloom
+
+
 @given(log_entries)
-def test_bloom_filter(log_entries):
+def test_bloom_filter_add_method(log_entries):
     bloom = BloomFilter()
 
     for address, topics in log_entries:
@@ -27,10 +36,29 @@ def test_bloom_filter(log_entries):
         for topic in topics:
             bloom.add(topic)
 
+    check_bloom(bloom, log_entries)
+
+
+@given(log_entries)
+def test_bloom_filter_extend_method(log_entries):
+    bloom = BloomFilter()
+
     for address, topics in log_entries:
-        assert address in bloom
-        for topic in topics:
-            assert topic in bloom
+        bloom.extend([address])
+        bloom.extend(topics)
+
+    check_bloom(bloom, log_entries)
+
+
+@given(log_entries)
+def test_bloom_filter_from_iterable_method(log_entries):
+    bloomables = itertools.chain.from_iterable(
+        itertools.chain([address], topics)
+        for address, topics
+        in log_entries
+    )
+    bloom = BloomFilter.from_iterable(bloomables)
+    check_bloom(bloom, log_entries)
 
 
 def test_casting_to_integer():
