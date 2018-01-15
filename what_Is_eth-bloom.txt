@@ -1,5 +1,4 @@
-Ethereum Bloom Filters
-======================
+# Ethereum Bloom Filters 
 
 Bloom filters are a type of data structure that use cryptographic hashes
 to help data stored within them to be retrieved or stored.  They work like other
