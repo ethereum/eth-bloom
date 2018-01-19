@@ -1,14 +1,15 @@
 sudo: false
 language: python
-python:
-  - "3.5"
-dist: trusty
-env:
-  matrix:
-    - TOX_ENV=py27
-    - TOX_ENV=py34
-    - TOX_ENV=py35
-    - TOX_ENV=flake8
+matrix:
+  include:
+    - python: "3.4"
+      env: TOX_ENV=py34
+    - python: "3.5"
+      env: TOX_ENV=py35
+    - python: "3.6"
+      env: TOX_ENV=py36
+    - python: "3.6"
+      env: TOX_ENV=flake8
 cache:
   - pip: true
   - directories:
@@ -19,6 +20,6 @@ install:
 before_script:
   - pip freeze
 script:
-  - tox -e $TOX_ENV --recreate
+  - tox -e $TOX_ENV
 after_script:
   - cat .tox/$TOX_ENV/log/*.log
