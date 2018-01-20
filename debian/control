@@ -1,0 +1,15 @@
+Source: python3-eth-bloom
+Section: python
+Priority: optional
+Maintainer: Jeffrey Cliff <jeffrey.cliff@gmail.com>
+Uploaders: Jeffrey Cliff <jeffrey.cliff@gmail.com>
+Build-Depends: debhelper (>= 8), dh-python, python3-all, python3(>= 3.4), python3-coverage, python3-sha3(>= 0.3), python3-setuptools-markdown, python3-hypothesis(>= 3.7.0), tox(>= 2.5.0), python3-pytest(>= 3.0.7)
+Standards-Version: 3.9.8
+Homepage: https://github.com/ethereum/eth-bloom
+
+Package: python3-eth-bloom
+Architecture: all
+Depends: ${misc:Depends}, ${python3:Depends}, python3-pkg-resources, python3-sha3(>= 0.3)
+Description: implementation of the Ethereum bloom filter
+ A python implementation of the bloom filter used by Ethereum.
+
