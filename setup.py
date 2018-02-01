@@ -16,7 +16,7 @@ setup(
     py_modules=['eth_bloom'],
     setup_requires=['setuptools-markdown'],
     install_requires=[
-        "pysha3>=0.3",
+        "pycryptodome>=3.4.6",
     ],
     license="MIT",
     zip_safe=False,
