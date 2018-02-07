@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 setup(
     name='eth-bloom',
     # *IMPORTANT*: Don't manually change the version here. Use the 'bumpversion' utility.
-    version='0.5.2',
+    version='0.6.0',
     description="""Python implementation of the Ethereum Trie structure""",
     long_description_markdown_filename='README.md',
     author='Piper Merriam',
@@ -16,7 +16,7 @@ setup(
     py_modules=['eth_bloom'],
     setup_requires=['setuptools-markdown'],
     install_requires=[
-        "pysha3>=0.3",
+        "pycryptodome>=3.4.6",
     ],
     license="MIT",
     zip_safe=False,
@@ -33,5 +33,6 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: Implementation :: PyPy',
     ],
 )

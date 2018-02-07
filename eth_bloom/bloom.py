@@ -4,13 +4,7 @@ import numbers
 import operator
 import sys
 
-try:
-    from sha3 import keccak_256
-except ImportError:
-    from sha3 import sha3_256 as keccak_256
-
-
-assert keccak_256(b'').digest() == b"\xc5\xd2F\x01\x86\xf7#<\x92~}\xb2\xdc\xc7\x03\xc0\xe5\x00\xb6S\xca\x82';\x7b\xfa\xd8\x04\x5d\x85\xa4p", "Incorrect sha3.  Make sure it's keccak"  # noqa: E501
+from .crypto import keccak_256
 
 
 if sys.version_info.major == 3:
