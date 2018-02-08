@@ -5,6 +5,7 @@ import itertools
 from hypothesis import (
     strategies as st,
     given,
+    settings,
 )
 from eth_bloom import (
     BloomFilter,
@@ -28,6 +29,7 @@ def check_bloom(bloom, log_entries):
 
 
 @given(log_entries)
+@settings(max_examples=20000)
 def test_bloom_filter_add_method(log_entries):
     bloom = BloomFilter()
 
@@ -40,6 +42,7 @@ def test_bloom_filter_add_method(log_entries):
 
 
 @given(log_entries)
+@settings(max_examples=20000)
 def test_bloom_filter_extend_method(log_entries):
     bloom = BloomFilter()
 
@@ -51,6 +54,7 @@ def test_bloom_filter_extend_method(log_entries):
 
 
 @given(log_entries)
+@settings(max_examples=20000)
 def test_bloom_filter_from_iterable_method(log_entries):
     bloomables = itertools.chain.from_iterable(
         itertools.chain([address], topics)
