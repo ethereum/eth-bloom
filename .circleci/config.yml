@@ -45,7 +45,7 @@ jobs:
   pypy3-core:
     <<: *common
     docker:
-      - image: library/pypy3
+      - image: pypy3
         environment:
           TOXENV: pypy3
 workflows:
