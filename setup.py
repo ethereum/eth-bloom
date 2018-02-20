@@ -16,7 +16,7 @@ setup(
     py_modules=['eth_bloom'],
     setup_requires=['setuptools-markdown'],
     install_requires=[
-        "pysha3>=0.3",
+        "eth-hash>=0.1.0a3,<0.2.0",
     ],
     license="MIT",
     zip_safe=False,
@@ -33,5 +33,6 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: Implementation :: PyPy',
     ],
 )
