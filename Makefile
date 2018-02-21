@@ -24,7 +24,7 @@ clean-pyc:
 	find . -name '*~' -exec rm -f {} +
 
 lint:
-	flake8 eth_bloom
+	flake8 eth_bloom tests
 
 test:
 	py.test --tb native tests
