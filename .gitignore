@@ -8,6 +8,7 @@
 *.egg-info
 dist
 build
+.eggs
 eggs
 parts
 var
@@ -52,3 +53,6 @@ prof/**
 
 # Hypothesis
 .hypothesis/**
+
+# Virtualenv
+venv*

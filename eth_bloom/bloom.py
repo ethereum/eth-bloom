@@ -2,13 +2,8 @@ from __future__ import absolute_import
 
 import numbers
 import operator
-import sys
 
 from eth_hash.auto import keccak as keccak_256
-
-
-if sys.version_info.major == 3:
-    long = int
 
 
 def get_chunks_for_bloom(value_hash):
@@ -67,7 +62,7 @@ class BloomFilter(numbers.Number):
         return operator.index(self.value)
 
     def _combine(self, other):
-        if not isinstance(other, (int, long, BloomFilter)):
+        if not isinstance(other, (int, BloomFilter)):
             raise TypeError(
                 "The `or` operator is only supported for other `BloomFilter` instances"
             )
@@ -80,7 +75,7 @@ class BloomFilter(numbers.Number):
         return self._combine(other)
 
     def _icombine(self, other):
-        if not isinstance(other, (int, long, BloomFilter)):
+        if not isinstance(other, (int, BloomFilter)):
             raise TypeError(
                 "The `or` operator is only supported for other `BloomFilter` instances"
             )
