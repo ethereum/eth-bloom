@@ -4,7 +4,6 @@ import numbers
 import operator
 from typing import (
     Iterable,
-    Type,
     Union,
 )
 
