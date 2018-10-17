@@ -28,9 +28,6 @@ def get_bloom_bits(value: bytes) -> Iterable[int]:
         yield bloom_bits
 
 
-T = TypeVar('T', bound='BloomFilter')
-
-
 class BloomFilter(numbers.Number):
     value = None
 
