@@ -4,9 +4,7 @@ import numbers
 import operator
 from typing import (
     Iterable,
-    Sequence,
     Type,
-    TypeVar,
     Union,
 )
 
@@ -31,9 +29,6 @@ def get_bloom_bits(value: bytes) -> Iterable[int]:
         yield bloom_bits
 
 
-T = TypeVar('T', bound='BloomFilter')
-
-
 class BloomFilter(numbers.Number):
     value = None
 
@@ -49,12 +44,12 @@ class BloomFilter(numbers.Number):
         for bloom_bits in get_bloom_bits(value):
             self.value |= bloom_bits
 
-    def extend(self, iterable: Sequence[bytes]) -> None:
+    def extend(self, iterable: Iterable[bytes]) -> None:
         for value in iterable:
             self.add(value)
 
     @classmethod
-    def from_iterable(cls: Type[T], iterable: Sequence[bytes]) -> T:
+    def from_iterable(cls, iterable: Iterable[bytes]) -> "BloomFilter":
         bloom = cls()
         bloom.extend(iterable)
         return bloom
@@ -71,20 +66,20 @@ class BloomFilter(numbers.Number):
     def __index__(self) -> int:
         return operator.index(self.value)
 
-    def _combine(self: T, other: Union[int, T]) -> T:
+    def _combine(self, other: Union[int, "BloomFilter"]) -> "BloomFilter":
         if not isinstance(other, (int, BloomFilter)):
             raise TypeError(
                 "The `or` operator is only supported for other `BloomFilter` instances"
             )
         return type(self)(int(self) | int(other))
 
-    def __or__(self: T, other: Union[int, T]) -> T:
+    def __or__(self, other: Union[int, "BloomFilter"]) -> "BloomFilter":
         return self._combine(other)
 
-    def __add__(self: T, other: Union[int, T]) -> T:
+    def __add__(self, other: Union[int, "BloomFilter"]) -> "BloomFilter":
         return self._combine(other)
 
-    def _icombine(self: T, other: Union[int, T]) -> T:
+    def _icombine(self, other: Union[int, "BloomFilter"]) -> "BloomFilter":
         if not isinstance(other, (int, BloomFilter)):
             raise TypeError(
                 "The `or` operator is only supported for other `BloomFilter` instances"
@@ -92,8 +87,8 @@ class BloomFilter(numbers.Number):
         self.value |= int(other)
         return self
 
-    def __ior__(self: T, other: Union[int, T]) -> T:
+    def __ior__(self, other: Union[int, "BloomFilter"]) -> "BloomFilter":
         return self._icombine(other)
 
-    def __iadd__(self: T, other: Union[int, T]) -> T:
+    def __iadd__(self, other: Union[int, "BloomFilter"]) -> "BloomFilter":
         return self._icombine(other)
