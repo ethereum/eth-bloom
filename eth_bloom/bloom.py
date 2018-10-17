@@ -4,7 +4,7 @@ import numbers
 import operator
 from typing import (
     Iterable,
-    List,
+    Sequence,
     Type,
     TypeVar,
     Union,
@@ -49,12 +49,12 @@ class BloomFilter(numbers.Number):
         for bloom_bits in get_bloom_bits(value):
             self.value |= bloom_bits
 
-    def extend(self, iterable: List[bytes]) -> None:
+    def extend(self, iterable: Sequence[bytes]) -> None:
         for value in iterable:
             self.add(value)
 
     @classmethod
-    def from_iterable(cls: Type[T], iterable: List[bytes]) -> T:
+    def from_iterable(cls: Type[T], iterable: Sequence[bytes]) -> T:
         bloom = cls()
         bloom.extend(iterable)
         return bloom
