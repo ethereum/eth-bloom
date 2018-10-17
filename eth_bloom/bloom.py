@@ -2,54 +2,64 @@ from __future__ import absolute_import
 
 import numbers
 import operator
+from typing import (
+    Iterable,
+    List,
+    Type,
+    TypeVar,
+    Union,
+)
 
 from eth_hash.auto import keccak as keccak_256
 
 
-def get_chunks_for_bloom(value_hash):
+def get_chunks_for_bloom(value_hash: bytes) -> Iterable[bytes]:
     yield value_hash[:2]
     yield value_hash[2:4]
     yield value_hash[4:6]
 
 
-def chunk_to_bloom_bits(chunk):
+def chunk_to_bloom_bits(chunk: bytes) -> int:
     high, low = bytearray(chunk)
     return 1 << ((low + (high << 8)) & 2047)
 
 
-def get_bloom_bits(value):
+def get_bloom_bits(value: bytes) -> Iterable[int]:
     value_hash = keccak_256(value)
     for chunk in get_chunks_for_bloom(value_hash):
         bloom_bits = chunk_to_bloom_bits(chunk)
         yield bloom_bits
 
 
+T = TypeVar('T', bound='BloomFilter')
+
+
 class BloomFilter(numbers.Number):
     value = None
 
-    def __init__(self, value=0):
+    def __init__(self, value: int=0) -> None:
         self.value = value
 
-    def __int__(self):
+    def __int__(self) -> int:
         return self.value
 
-    def add(self, value):
+    def add(self, value: bytes) -> None:
         if not isinstance(value, bytes):
             raise TypeError("Value must be of type `bytes`")
         for bloom_bits in get_bloom_bits(value):
             self.value |= bloom_bits
 
-    def extend(self, iterable):
+    def extend(self, iterable: List[bytes]) -> None:
         for value in iterable:
             self.add(value)
 
     @classmethod
-    def from_iterable(cls, iterable):
+    def from_iterable(cls: Type[T], iterable: List[bytes]) -> T:
         bloom = cls()
         bloom.extend(iterable)
         return bloom
 
-    def __contains__(self, value):
+    def __contains__(self, value: bytes) -> bool:
         if not isinstance(value, bytes):
             raise TypeError("Value must be of type `bytes`")
         return all(
@@ -58,23 +68,23 @@ class BloomFilter(numbers.Number):
             in get_bloom_bits(value)
         )
 
-    def __index__(self):
+    def __index__(self) -> int:
         return operator.index(self.value)
 
-    def _combine(self, other):
+    def _combine(self: T, other: Union[int, T]) -> T:
         if not isinstance(other, (int, BloomFilter)):
             raise TypeError(
                 "The `or` operator is only supported for other `BloomFilter` instances"
             )
-        return BloomFilter(int(self) | int(other))
+        return type(self)(int(self) | int(other))
 
-    def __or__(self, other):
+    def __or__(self: T, other: Union[int, T]) -> T:
         return self._combine(other)
 
-    def __add__(self, other):
+    def __add__(self: T, other: Union[int, T]) -> T:
         return self._combine(other)
 
-    def _icombine(self, other):
+    def _icombine(self: T, other: Union[int, T]) -> T:
         if not isinstance(other, (int, BloomFilter)):
             raise TypeError(
                 "The `or` operator is only supported for other `BloomFilter` instances"
@@ -82,8 +92,8 @@ class BloomFilter(numbers.Number):
         self.value |= int(other)
         return self
 
-    def __ior__(self, other):
+    def __ior__(self: T, other: Union[int, T]) -> T:
         return self._icombine(other)
 
-    def __iadd__(self, other):
+    def __iadd__(self: T, other: Union[int, T]) -> T:
         return self._icombine(other)
