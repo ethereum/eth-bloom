@@ -2,6 +2,25 @@
 # -*- coding: utf-8 -*-
 from setuptools import setup, find_packages
 
+extras_require = {
+    'test': [
+        "pytest==3.0.7",
+        "hypothesis==3.7.0",
+        "tox==2.6.0",
+    ],
+    'lint': [
+        "flake8>=3.5.0,<4.0.0",
+    ],
+    'dev': [
+        "bumpversion==0.5.3",
+    ],
+}
+
+extras_require['dev'] = (
+    extras_require['dev'] +
+    extras_require['test'] +
+    extras_require['lint']
+)
 
 setup(
     name='eth-bloom',
@@ -18,6 +37,8 @@ setup(
     install_requires=[
         "eth-hash>=0.1.0a3,<0.3.0",
     ],
+    python_requires='>=3.5, !=3.5.2, <4',
+    extras_require=extras_require,
     license="MIT",
     zip_safe=False,
     keywords='ethereum blockchain evm trie merkle',
