@@ -41,6 +41,7 @@ setup(
     extras_require=extras_require,
     license="MIT",
     zip_safe=False,
+    package_data={'eth_bloom': ['py.typed']},
     keywords='ethereum blockchain evm trie merkle',
     packages=find_packages(exclude=["tests", "tests.*"]),
     classifiers=[
