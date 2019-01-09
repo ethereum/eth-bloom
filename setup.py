@@ -11,12 +11,17 @@ extras_require = {
     'lint': [
         "flake8>=3.5.0,<4.0.0",
     ],
+    'deploy': [
+        'bumpversion>=0.5.3,<1.0.0',
+        'wheel>=0.30.0,<1.0.0',
+    ],
     'dev': [
-        "bumpversion==0.5.3",
+        "twine",
     ],
 }
 
 extras_require['dev'] = (
+    extras_require['deploy'] +
     extras_require['dev'] +
     extras_require['test'] +
     extras_require['lint']
