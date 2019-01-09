@@ -47,7 +47,12 @@ docs:
 	open docs/_build/html/index.html
 
 release: clean
-	python setup.py sdist bdist_wheel upload
+	git config commit.gpgSign true
+	bumpversion $(bump)
+	git push upstream && git push upstream --tags
+	python setup.py sdist bdist_wheel
+	twine upload dist/*
+	git config commit.gpgSign "$(CURRENT_SIGN_SETTING)"
 
 sdist: clean
 	python setup.py sdist bdist_wheel
