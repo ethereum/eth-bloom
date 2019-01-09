@@ -31,7 +31,7 @@ def get_bloom_bits(value: bytes) -> Iterable[int]:
 class BloomFilter(numbers.Number):
     value = None
 
-    def __init__(self, value: int=0) -> None:
+    def __init__(self, value: int = 0) -> None:
         self.value = value
 
     def __int__(self) -> int:
