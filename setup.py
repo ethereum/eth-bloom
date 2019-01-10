@@ -31,7 +31,7 @@ extras_require['dev'] = (
 setup(
     name='eth-bloom',
     # *IMPORTANT*: Don't manually change the version here. Use the 'bumpversion' utility.
-    version='1.0.2',
+    version='1.0.3',
     description="""Python implementation of the Ethereum Trie structure""",
     long_description_markdown_filename='README.md',
     author='Piper Merriam',
