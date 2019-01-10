@@ -5,6 +5,7 @@ import operator
 from typing import (
     Iterable,
     Union,
+    TYPE_CHECKING,
 )
 
 from eth_hash.auto import keccak as keccak_256
@@ -96,5 +97,6 @@ class BloomFilter(numbers.Number):
         return self._icombine(other)
 
 
-# This ensures that our linter catches any missing abstract base methods
-__vector = BloomFilter()
+if TYPE_CHECKING:
+    # This ensures that our linter catches any missing abstract base methods
+    BloomFilter()
