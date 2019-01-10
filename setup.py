@@ -10,6 +10,7 @@ extras_require = {
     ],
     'lint': [
         "flake8>=3.5.0,<4.0.0",
+        'mypy<0.600',
     ],
     'deploy': [
         'bumpversion>=0.5.3,<1.0.0',

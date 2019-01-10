@@ -5,6 +5,7 @@ import operator
 from typing import (
     Iterable,
     Union,
+    TYPE_CHECKING,
 )
 
 from eth_hash.auto import keccak as keccak_256
@@ -29,13 +30,16 @@ def get_bloom_bits(value: bytes) -> Iterable[int]:
 
 
 class BloomFilter(numbers.Number):
-    value = None
+    value = None  # type: int
 
     def __init__(self, value: int = 0) -> None:
         self.value = value
 
     def __int__(self) -> int:
         return self.value
+
+    def __hash__(self) -> int:
+        return hash(self.value)
 
     def add(self, value: bytes) -> None:
         if not isinstance(value, bytes):
@@ -91,3 +95,8 @@ class BloomFilter(numbers.Number):
 
     def __iadd__(self, other: Union[int, "BloomFilter"]) -> "BloomFilter":
         return self._icombine(other)
+
+
+if TYPE_CHECKING:
+    # This ensures that our linter catches any missing abstract base methods
+    BloomFilter()
