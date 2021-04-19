@@ -41,7 +41,7 @@ setup(
     py_modules=['eth_bloom'],
     setup_requires=['setuptools-markdown'],
     install_requires=[
-        "eth-hash>=0.1.0a3,<0.3.0",
+        "eth-hash[pycryptodome]>=0.3.1,<0.4.0",
     ],
     python_requires='>=3.5, !=3.5.2, <4',
     extras_require=extras_require,
