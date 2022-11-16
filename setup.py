@@ -3,56 +3,57 @@
 from setuptools import setup, find_packages
 
 extras_require = {
-    'test': [
+    "test": [
         "pytest>=6.2.5",
         "hypothesis>=3.31.2",
         "tox==2.6.0",
     ],
-    'lint': [
+    "lint": [
         "flake8==3.8.3",
         "mypy==0.910",
+        "black>=22.1.0",
     ],
-    'deploy': [
+    "deploy": [
         "bumpversion",
         "wheel",
     ],
-    'dev': [
+    "dev": [
         "twine",
         "build",
     ],
 }
 
-extras_require['dev'] = (
-    extras_require['deploy'] +
-    extras_require['dev'] +
-    extras_require['test'] +
-    extras_require['lint']
+extras_require["dev"] = (
+    extras_require["deploy"]
+    + extras_require["dev"]
+    + extras_require["test"]
+    + extras_require["lint"]
 )
 
 with open("./README.md") as readme:
     long_description = readme.read()
 
 setup(
-    name='eth-bloom',
+    name="eth-bloom",
     # *IMPORTANT*: Don't manually change the version here. Use the 'bumpversion' utility.
-    version='1.0.4',
+    version="1.0.4",
     description="""Python implementation of the Ethereum Trie structure""",
     long_description_content_type="text/markdown",
     long_description=long_description,
-    author='Piper Merriam',
-    author_email='pipermerriam@gmail.com',
-    url='https://github.com/ethereum/eth-bloom',
+    author="Piper Merriam",
+    author_email="pipermerriam@gmail.com",
+    url="https://github.com/ethereum/eth-bloom",
     include_package_data=True,
-    py_modules=['eth_bloom'],
+    py_modules=["eth_bloom"],
     install_requires=[
         "eth-hash[pycryptodome]>=0.4.0",
     ],
-    python_requires='>=3.7.2, <4',
+    python_requires=">=3.7.2, <4",
     extras_require=extras_require,
     license="MIT",
     zip_safe=False,
-    package_data={'eth_bloom': ['py.typed']},
-    keywords='ethereum blockchain evm trie merkle',
+    package_data={"eth_bloom": ["py.typed"]},
+    keywords="ethereum blockchain evm trie merkle",
     packages=find_packages(exclude=["tests", "tests.*"]),
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",

@@ -60,11 +60,7 @@ class BloomFilter(numbers.Number):
     def __contains__(self, value: bytes) -> bool:
         if not isinstance(value, bytes):
             raise TypeError("Value must be of type `bytes`")
-        return all(
-            self.value & bloom_bits
-            for bloom_bits
-            in get_bloom_bits(value)
-        )
+        return all(self.value & bloom_bits for bloom_bits in get_bloom_bits(value))
 
     def __index__(self) -> int:
         return operator.index(self.value)
