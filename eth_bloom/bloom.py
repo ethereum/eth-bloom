@@ -2,11 +2,7 @@ from __future__ import absolute_import
 
 import numbers
 import operator
-from typing import (
-    Iterable,
-    Union,
-    TYPE_CHECKING,
-)
+from typing import TYPE_CHECKING, Iterable, Union
 
 from eth_hash.auto import keccak as keccak_256
 

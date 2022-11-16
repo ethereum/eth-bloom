@@ -6,11 +6,12 @@ extras_require = {
     "test": [
         "pytest>=6.2.5",
         "hypothesis>=3.31.2",
-        "tox==2.6.0",
+        "tox>=2.6.0",
     ],
     "lint": [
         "flake8==3.8.3",
         "mypy==0.910",
+        "isort>=4.2.15",
         "black>=22.1.0",
     ],
     "deploy": [
@@ -20,6 +21,8 @@ extras_require = {
     "dev": [
         "twine",
         "build",
+        "sphinx>=1.6.5",
+        "sphinx_rtd_theme>=0.1.9",
     ],
 }
 

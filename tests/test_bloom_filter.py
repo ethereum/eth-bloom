@@ -2,15 +2,10 @@ from __future__ import unicode_literals
 
 import itertools
 
-from hypothesis import (
-    strategies as st,
-    given,
-    settings,
-)
-from eth_bloom import (
-    BloomFilter,
-)
+from hypothesis import given, settings
+from hypothesis import strategies as st
 
+from eth_bloom import BloomFilter
 
 address = st.binary(min_size=20, max_size=20)
 topic = st.binary(min_size=32, max_size=32)
