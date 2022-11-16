@@ -72,6 +72,7 @@ jobs:
       - image: pypy
     environment:
       TOXENV: pypy3
+
 workflows:
   version: 2
   test:
