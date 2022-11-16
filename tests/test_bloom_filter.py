@@ -24,7 +24,11 @@ def check_bloom(bloom, log_entries):
 
 
 @given(log_entries)
-@settings(max_examples=20000)
+@settings(
+    max_examples=20000,
+    # consider setting `deadline` to `None` or raising it if timeout issues persist
+    deadline=400,
+)
 def test_bloom_filter_add_method(log_entries):
     bloom = BloomFilter()
 
