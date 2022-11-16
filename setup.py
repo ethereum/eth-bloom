@@ -43,7 +43,7 @@ setup(
     install_requires=[
         "eth-hash[pycryptodome]>=0.3.1,<0.4.0",
     ],
-    python_requires='>=3.6, <4',
+    python_requires='>=3.7, <4',
     extras_require=extras_require,
     license="MIT",
     zip_safe=False,
@@ -56,8 +56,11 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: Implementation :: PyPy',
     ],
 )

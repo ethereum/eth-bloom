@@ -14,7 +14,7 @@ common: &common
         command: pip install --user tox
     - run:
         name: run tox
-        command: ~/.local/bin/tox
+        command: python -m tox -r
     - save_cache:
         paths:
           - .tox
@@ -27,32 +27,59 @@ jobs:
   lint:
     <<: *common
     docker:
-      - image: circleci/python:3.6
-        environment:
-          TOXENV: lint
-  py36-core:
-    <<: *common
-    docker:
-      - image: circleci/python:3.6
-        environment:
-          TOXENV: py36
+      - image: cimg/python:3.11
+    environment:
+      TOXENV: lint
+
   py37-core:
     <<: *common
     docker:
-      - image: circleci/python:3.7
-        environment:
-          TOXENV: py37
+      - image: cimg/python:3.7
+    environment:
+      TOXENV: py37
+
+  py38-core:
+    <<: *common
+    docker:
+      - image: cimg/python:3.8
+    environment:
+      TOXENV: py38
+
+  py39-core:
+    <<: *common
+    docker:
+      - image: cimg/python:3.9
+    environment:
+      TOXENV: py39
+
+  py310-core:
+    <<: *common
+    docker:
+      - image: cimg/python:3.10
+    environment:
+      TOXENV: py310
+
+  py311-core:
+    <<: *common
+    docker:
+      - image: cimg/python:3.11
+    environment:
+      TOXENV: py311
+
   pypy3-core:
     <<: *common
     docker:
       - image: pypy
-        environment:
-          TOXENV: pypy3
+    environment:
+      TOXENV: pypy3
 workflows:
   version: 2
   test:
     jobs:
       - lint
-      - py36-core
       - py37-core
+      - py38-core
+      - py39-core
+      - py310-core
+      - py311-core
       - pypy3-core
