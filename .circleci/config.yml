@@ -1,4 +1,4 @@
-version: 2.0
+version: 2.1
 
 # heavily inspired by https://raw.githubusercontent.com/pinax/pinax-wiki/6bd2a99ab6f702e300d708532a6d1d9aa638b9f8/.circleci/config.yml
 
