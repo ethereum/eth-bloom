@@ -27,7 +27,7 @@ jobs:
   lint:
     <<: *common
     docker:
-      - image: cimg/python:3.11
+      - image: cimg/python:3.7
     environment:
       TOXENV: lint
 

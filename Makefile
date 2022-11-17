@@ -6,10 +6,8 @@ help:
 	@echo "lint - check style with flake8"
 	@echo "lint-roll - automatically fix problems with isort, flake8, etc"
 	@echo "test - run tests quickly with the default Python"
-	@echo "testall - run tests on every Python version with tox"
-	@echo "docs - generate docs and open in browser (linux-docs for version on linux)"
-	@echo "notes - consume towncrier newsfragments/ and update release notes in docs/"
-	@echo "release - package and upload a release (does not run notes target)"
+	@echo "test-all - run tests on every Python version with tox"
+	@echo "release - package and upload a release"
 	@echo "dist - package"
 
 clean: clean-build clean-pyc
@@ -38,17 +36,6 @@ test:
 
 test-all:
 	tox
-
-build-docs:
-	rm -f docs/eth_bloom.rst
-	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ . setup.py "*conftest*"
-	$(MAKE) -C docs clean
-	$(MAKE) -C docs html
-	$(MAKE) -C docs doctest
-
-docs: build-docs
-	open docs/_build/html/index.html
 
 check-bump:
 ifndef bump
