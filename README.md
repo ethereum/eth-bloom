@@ -1,6 +1,6 @@
 # Ethereum Bloom Filter
 
-[![Build Status](https://travis-ci.org/ethereum/eth-bloom.svg?branch=master)](https://travis-ci.org/ethereum/eth-bloom)
+[![Build Status](https://circleci.com/gh/ethereum/eth-bloom.svg?style=shield)](https://circleci.com/gh/ethereum/eth-bloom)
 [![PyPI version](https://badge.fury.io/py/eth-bloom.svg)](https://badge.fury.io/py/eth-bloom)
 [![Python versions](https://img.shields.io/pypi/pyversions/eth-bloom.svg)](https://pypi.python.org/pypi/eth-bloom)
 
@@ -8,7 +8,7 @@ A python implementation of the bloom filter used by Ethereum.
 
 > This library and repository was previously located at https://github.com/pipermerriam/ethereum-bloom.  It was transferred to the Ethereum foundation github in November 2017 and renamed to `eth-bloom`.  The PyPi package was also renamed from `ethereum-bloom` to `eth-bloom.
 
-For more information on what Ethereum Bloom Filters are see [here](what_Is_eth-bloom.txt).
+For more information on what Ethereum Bloom Filters are see [here](what_is_eth-bloom.txt).
 
 ## Installation
 
@@ -20,7 +20,7 @@ $ pip install eth-bloom
 ## Development
 
 ```sh
-pip install -e .[dev]
+pip install -e ".[dev]"
 ```
 
 
@@ -29,7 +29,7 @@ pip install -e .[dev]
 You can run the tests with:
 
 ```sh
-py.test tests
+pytest tests
 ```
 
 Or you can install `tox` to run the full test suite.
@@ -37,27 +37,10 @@ Or you can install `tox` to run the full test suite.
 
 ### Releasing
 
-Pandoc is required for transforming the markdown README to the proper format to
-render correctly on pypi.
-
-For Debian-like systems:
-
-```
-apt install pandoc
-```
-
-Or on OSX:
-
-```sh
-brew install pandoc
-```
-
 To release a new version:
 
 ```sh
-bumpversion $$VERSION_PART_TO_BUMP$$
-git push && git push --tags
-make release
+make release bump={bumpversion}
 ```
 
 
