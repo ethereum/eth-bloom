@@ -9,7 +9,7 @@ extras_require = {
         "tox>=2.6.0",
     ],
     "lint": [
-        "flake8==3.8.3",
+        "flake8>=3.8.3",
         "mypy==0.910",
         "isort>=4.2.15",
         "black>=22.1.0",
@@ -21,8 +21,6 @@ extras_require = {
     "dev": [
         "twine",
         "build",
-        "sphinx>=1.6.5",
-        "sphinx_rtd_theme>=0.1.9",
     ],
 }
 
@@ -51,7 +49,7 @@ setup(
     install_requires=[
         "eth-hash[pycryptodome]>=0.4.0",
     ],
-    python_requires=">=3.7.2, <4",
+    python_requires=">=3.7, <4",
     extras_require=extras_require,
     license="MIT",
     zip_safe=False,
