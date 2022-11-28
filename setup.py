@@ -37,7 +37,7 @@ with open("./README.md") as readme:
 setup(
     name="eth-bloom",
     # *IMPORTANT*: Don't manually change the version here. Use the 'bumpversion' utility.
-    version="1.0.4",
+    version="2.0.0",
     description="""Python implementation of the Ethereum Trie structure""",
     long_description_content_type="text/markdown",
     long_description=long_description,
