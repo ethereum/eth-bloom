@@ -38,7 +38,7 @@ setup(
     name="eth-bloom",
     # *IMPORTANT*: Don't manually change the version here. Use the 'bumpversion' utility.
     version="2.0.0",
-    description="""Python implementation of the Ethereum Trie structure""",
+    description="""A python implementation of the bloom filter used by Ethereum""",
     long_description_content_type="text/markdown",
     long_description=long_description,
     author="Piper Merriam",
