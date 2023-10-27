@@ -7,7 +7,7 @@
 
 A python implementation of the bloom filter used by Ethereum.
 
-> This library and repository was previously located at https://github.com/pipermerriam/ethereum-bloom.  It was transferred to the Ethereum foundation github in November 2017 and renamed to `eth-bloom`.  The PyPi package was also renamed from `ethereum-bloom` to `eth-bloom.
+> This library and repository was previously located at https://github.com/pipermerriam/ethereum-bloom.  It was transferred to the Ethereum foundation github in November 2017 and renamed to `eth-bloom`.  The PyPi package was also renamed from `ethereum-bloom` to \`eth-bloom.
 
 Read more in the documentation below. [View the change log](https://github.com/ethereum/eth-bloom/blob/master/CHANGELOG.rst).
 

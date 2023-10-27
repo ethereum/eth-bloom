@@ -1,4 +1,4 @@
-# Ethereum Bloom Filters 
+# Ethereum Bloom Filters
 
 Bloom filters are a type of data structure that use cryptographic hashes
 to help data stored within them to be retrieved or stored.  They work like other
@@ -13,4 +13,4 @@ Ethereum bloom filters are bloom filters implemented with the SHA-256 ("keccak")
 To see the bloom filter used in the context of the full description of Ethereum / the "Yellow Paper" see
 
 DR. GAVIN WOOD - ETHEREUM: A SECURE DECENTRALISED GENERALISED TRANSACTION LEDGER, EIP-150 REVISION, FOUNDER, ETHEREUM & ETHCORE, GAVIN@ETHCORE.IO
-http://gavwood.com/Paper.pdf 
+http://gavwood.com/Paper.pdf
