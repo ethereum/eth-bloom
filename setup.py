@@ -1,34 +1,34 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from setuptools import setup, find_packages
+from setuptools import (
+    find_packages,
+    setup,
+)
 
 extras_require = {
-    "test": [
-        "pytest>=6.2.5",
-        "hypothesis>=3.31.2",
-        "tox>=2.6.0",
-    ],
-    "lint": [
-        "flake8>=3.8.3",
-        "mypy==0.910",
-        "isort>=4.2.15",
-        "black>=22.1.0",
-    ],
-    "deploy": [
-        "bumpversion",
+    "dev": [
+        "build>=0.9.0",
+        "bumpversion>=0.5.3",
+        "ipython",
+        "pre-commit>=3.4.0",
+        "tox>=4.0.0",
+        "twine",
         "wheel",
     ],
-    "dev": [
-        "twine",
-        "build",
+    "docs": [
+        "sphinx>=6.0.0",
+        "sphinx_rtd_theme>=1.0.0",
+        "towncrier>=21,<22",
+    ],
+    "test": [
+        "hypothesis>=3.31.2",
+        "pytest>=7.0.0",
+        "pytest-xdist>=2.4.0",
     ],
 }
 
 extras_require["dev"] = (
-    extras_require["deploy"]
-    + extras_require["dev"]
-    + extras_require["test"]
-    + extras_require["lint"]
+    extras_require["dev"] + extras_require["docs"] + extras_require["test"]
 )
 
 with open("./README.md") as readme:
@@ -39,34 +39,32 @@ setup(
     # *IMPORTANT*: Don't manually change the version here. Use the 'bumpversion' utility.
     version="2.0.0",
     description="""A python implementation of the bloom filter used by Ethereum""",
-    long_description_content_type="text/markdown",
     long_description=long_description,
-    author="Piper Merriam",
-    author_email="pipermerriam@gmail.com",
+    long_description_content_type="text/markdown",
+    author="The Ethereum Foundation",
+    author_email="snakecharmers@ethereum.org",
     url="https://github.com/ethereum/eth-bloom",
     include_package_data=True,
-    py_modules=["eth_bloom"],
     install_requires=[
         "eth-hash[pycryptodome]>=0.4.0",
     ],
-    python_requires=">=3.7, <4",
+    python_requires=">=3.8, <4",
     extras_require=extras_require,
+    py_modules=["eth_bloom"],
     license="MIT",
     zip_safe=False,
-    package_data={"eth_bloom": ["py.typed"]},
     keywords="ethereum blockchain evm trie merkle",
     packages=find_packages(exclude=["tests", "tests.*"]),
+    package_data={"eth_bloom": ["py.typed"]},
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Natural Language :: English",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
-        "Programming Language :: Python :: Implementation :: PyPy",
     ],
 )

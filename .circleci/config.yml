@@ -6,81 +6,168 @@ common: &common
   working_directory: ~/repo
   steps:
     - checkout
+    - run:
+        name: merge pull request base
+        command: ./.circleci/merge_pr.sh
+    - run:
+        name: merge pull request base (2nd try)
+        command: ./.circleci/merge_pr.sh
+        when: on_fail
+    - run:
+        name: merge pull request base (3rd try)
+        command: ./.circleci/merge_pr.sh
+        when: on_fail
     - restore_cache:
         keys:
-          - cache-{{ .Environment.CIRCLE_JOB }}-{{ checksum "setup.py" }}-{{ checksum "tox.ini" }}
+          - cache-v1-{{ arch }}-{{ .Environment.CIRCLE_JOB }}-{{ checksum "setup.py" }}-{{ checksum "tox.ini" }}
     - run:
         name: install dependencies
-        command: pip install --user tox
+        command: |
+          python -m pip install --upgrade pip
+          python -m pip install tox
+    - run:
+        name: install pre-commit
+        command: python -m pip install --progress-bar=off pre-commit
     - run:
         name: run tox
-        command: python -m tox -r
+        command: python -m tox run -r
     - save_cache:
         paths:
+          - .hypothesis
           - .tox
           - ~/.cache/pip
           - ~/.local
-          - ./eggs
-        key: cache-{{ .Environment.CIRCLE_JOB }}-{{ checksum "setup.py" }}-{{ checksum "tox.ini" }}
+        key: cache-v1-{{ arch }}-{{ .Environment.CIRCLE_JOB }}-{{ checksum "setup.py" }}-{{ checksum "tox.ini" }}
+
+orbs:
+  win: circleci/windows@5.0.0
+
+windows_steps: &windows_steps
+  executor:
+    name: win/default
+    shell: bash.exe
+  working_directory: C:\Users\circleci\project\<REPO_NAME>
+  steps:
+    - checkout
+    - restore_cache:
+        keys:
+          - cache-v1-{{ arch }}-{{ .Environment.CIRCLE_JOB }}-{{ checksum "setup.py" }}-{{ checksum "tox.ini" }}
+    - run:
+        name: install dependencies
+        command: |
+          python -m pip install --upgrade pip
+          python -m pip install tox
+    - run:
+        name: run tox
+        command: python -m tox run -r
+    - save_cache:
+        paths:
+          - .tox
+        key: cache-v1-{{ arch }}-{{ .Environment.CIRCLE_JOB }}-{{ checksum "setup.py" }}-{{ checksum "tox.ini" }}
 
 jobs:
-  lint:
+  docs:
     <<: *common
     docker:
-      - image: cimg/python:3.7
-    environment:
-      TOXENV: lint
-
-  py37-core:
-    <<: *common
-    docker:
-      - image: cimg/python:3.7
-    environment:
-      TOXENV: py37
+      - image: cimg/python:3.8
+        environment:
+          TOXENV: docs
 
   py38-core:
     <<: *common
     docker:
       - image: cimg/python:3.8
-    environment:
-      TOXENV: py38
-
+        environment:
+          TOXENV: py38-core
   py39-core:
     <<: *common
     docker:
       - image: cimg/python:3.9
-    environment:
-      TOXENV: py39
-
+        environment:
+          TOXENV: py39-core
   py310-core:
     <<: *common
     docker:
       - image: cimg/python:3.10
-    environment:
-      TOXENV: py310
-
+        environment:
+          TOXENV: py310-core
   py311-core:
     <<: *common
     docker:
       - image: cimg/python:3.11
-    environment:
-      TOXENV: py311
+        environment:
+          TOXENV: py311-core
 
-  pypy3-core:
+  py38-lint:
     <<: *common
     docker:
-      - image: pypy
+      - image: cimg/python:3.8
+        environment:
+          TOXENV: py38-lint
+  py39-lint:
+    <<: *common
+    docker:
+      - image: cimg/python:3.9
+        environment:
+          TOXENV: py39-lint
+  py310-lint:
+    <<: *common
+    docker:
+      - image: cimg/python:3.10
+        environment:
+          TOXENV: py310-lint
+  py311-lint:
+    <<: *common
+    docker:
+      - image: cimg/python:3.11
+        environment:
+          TOXENV: py311-lint
+
+  py38-wheel:
+    <<: *common
+    docker:
+      - image: cimg/python:3.8
+        environment:
+          TOXENV: py38-wheel
+  py39-wheel:
+    <<: *common
+    docker:
+      - image: cimg/python:3.9
+        environment:
+          TOXENV: py39-wheel
+  py310-wheel:
+    <<: *common
+    docker:
+      - image: cimg/python:3.10
+        environment:
+          TOXENV: py310-wheel
+  py311-wheel:
+    <<: *common
+    docker:
+      - image: cimg/python:3.11
+        environment:
+          TOXENV: py311-wheel
+
+  py311-wheel-windows:
+    <<: *windows_steps
     environment:
-      TOXENV: pypy3
+      TOXENV: py311-wheel-windows
 
 workflows:
   version: 2
   test:
     jobs:
-      - lint
-      - py37-core
+      - docs
       - py38-core
       - py39-core
       - py310-core
       - py311-core
-      - pypy3-core
+      - py38-lint
+      - py39-lint
+      - py310-lint
+      - py311-lint
+      - py38-wheel
+      - py39-wheel
+      - py310-wheel
+      - py311-wheel
+      - py311-wheel-windows
