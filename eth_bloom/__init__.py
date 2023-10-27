@@ -1,8 +1,9 @@
-import sys
+from importlib.metadata import (
+    version as __version,
+)
 
 from .bloom import (
     BloomFilter,
 )
 
-if sys.version_info < (3, 7):
-    raise EnvironmentError("Python 3.7 or above is required")
+__version__ = __version("eth-bloom")

@@ -7,8 +7,8 @@ help:
 	@echo "clean-pyc - remove Python file artifacts"
 	@echo "lint - fix linting issues with pre-commit"
 	@echo "test - run tests quickly with the default Python"
-	@echo "docs - generate docs and open in browser (linux-docs for version on linux)"
-	@echo "notes - consume towncrier newsfragments/ and update release notes in docs/"
+	@echo "docs - view draft of newsfragments to be added to CHANGELOG"
+	@echo "notes - consume towncrier newsfragments/ and update CHANGELOG"
 	@echo "release - package and upload a release (does not run notes target)"
 	@echo "dist - package"
 
@@ -33,23 +33,9 @@ lint:
 test:
 	pytest tests
 
-build-docs:
-	sphinx-apidoc -o docs/ . setup.py "*conftest*"
-	$(MAKE) -C docs clean
-	$(MAKE) -C docs html
-	$(MAKE) -C docs doctest
-
-validate-docs:
+docs:
 	python ./newsfragments/validate_files.py
 	towncrier build --draft --version preview
-
-check-docs: build-docs validate-docs
-
-docs: check-docs
-	open docs/_build/html/index.html
-
-linux-docs: check-docs
-	xdg-open docs/_build/html/index.html
 
 check-bump:
 ifndef bump
@@ -62,7 +48,7 @@ notes: check-bump
 	# Now generate the release notes to have them included in the release commit
 	towncrier build --yes --version $(UPCOMING_VERSION)
 	# Before we bump the version, make sure that the towncrier-generated docs will build
-	make build-docs
+	make docs
 	git commit -m "Compile release notes"
 
 release: check-bump clean
@@ -70,7 +56,7 @@ release: check-bump clean
 	git remote -v | grep "upstream\tgit@github.com:ethereum/eth-bloom.git (push)\|upstream\thttps://github.com/ethereum/eth-bloom (push)"
 	# verify that docs build correctly
 	./newsfragments/validate_files.py is-empty
-	make build-docs
+	make docs
 	CURRENT_SIGN_SETTING=$(git config commit.gpgSign)
 	git config commit.gpgSign true
 	bumpversion $(bump)
