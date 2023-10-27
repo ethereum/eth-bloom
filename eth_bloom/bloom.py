@@ -1,10 +1,18 @@
-from __future__ import absolute_import
+from __future__ import (
+    absolute_import,
+)
 
 import numbers
 import operator
-from typing import TYPE_CHECKING, Iterable, Union
+from typing import (
+    TYPE_CHECKING,
+    Iterable,
+    Union,
+)
 
-from eth_hash.auto import keccak as keccak_256
+from eth_hash.auto import (
+    keccak as keccak_256,
+)
 
 
 def get_chunks_for_bloom(value_hash: bytes) -> Iterable[bytes]:

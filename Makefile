@@ -1,13 +1,15 @@
+CURRENT_SIGN_SETTING := $(shell git config commit.gpgSign)
+
 .PHONY: clean-pyc clean-build docs
 
 help:
 	@echo "clean-build - remove build artifacts"
 	@echo "clean-pyc - remove Python file artifacts"
-	@echo "lint - check style with flake8"
-	@echo "lint-roll - automatically fix problems with isort, flake8, etc"
+	@echo "lint - fix linting issues with pre-commit"
 	@echo "test - run tests quickly with the default Python"
-	@echo "test-all - run tests on every Python version with tox"
-	@echo "release - package and upload a release"
+	@echo "docs - view draft of newsfragments to be added to CHANGELOG"
+	@echo "notes - consume towncrier newsfragments/ and update CHANGELOG"
+	@echo "release - package and upload a release (does not run notes target)"
 	@echo "dist - package"
 
 clean: clean-build clean-pyc
@@ -15,7 +17,6 @@ clean: clean-build clean-pyc
 clean-build:
 	rm -fr build/
 	rm -fr dist/
-	rm -fr *.egg-info
 
 clean-pyc:
 	find . -name '*.pyc' -exec rm -f {} +
@@ -24,27 +25,38 @@ clean-pyc:
 	find . -name '__pycache__' -exec rm -rf {} +
 
 lint:
-	tox -e lint
-
-lint-roll:
-	isort eth_bloom tests
-	black eth_bloom tests setup.py
-	$(MAKE) lint
+	@pre-commit run --all-files --show-diff-on-failure || ( \
+		echo "\n\n\n * pre-commit should have fixed the errors above. Running again to make sure everything is good..." \
+		&& pre-commit run --all-files --show-diff-on-failure \
+	)
 
 test:
 	pytest tests
 
-test-all:
-	tox
+docs:
+	python ./newsfragments/validate_files.py
+	towncrier build --draft --version preview
 
 check-bump:
 ifndef bump
 	$(error bump must be set, typically: major, minor, patch, or devnum)
 endif
 
+notes: check-bump
+	# Let UPCOMING_VERSION be the version that is used for the current bump
+	$(eval UPCOMING_VERSION=$(shell bumpversion $(bump) --dry-run --list | grep new_version= | sed 's/new_version=//g'))
+	# Now generate the release notes to have them included in the release commit
+	towncrier build --yes --version $(UPCOMING_VERSION)
+	# Before we bump the version, make sure that the towncrier-generated docs will build
+	make docs
+	git commit -m "Compile release notes"
+
 release: check-bump clean
-	# require that you be on a branch that's linked to upstream/master
-	git status -s -b | head -1 | grep "\.\.upstream/master"
+	# require that upstream is configured for ethereum/eth-bloom
+	git remote -v | grep "upstream\tgit@github.com:ethereum/eth-bloom.git (push)\|upstream\thttps://github.com/ethereum/eth-bloom (push)"
+	# verify that docs build correctly
+	./newsfragments/validate_files.py is-empty
+	make docs
 	CURRENT_SIGN_SETTING=$(git config commit.gpgSign)
 	git config commit.gpgSign true
 	bumpversion $(bump)
