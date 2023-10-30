@@ -1,3 +1,18 @@
+eth-bloom v3.0.0 (2023-10-30)
+-----------------------------
+
+Breaking Changes
+~~~~~~~~~~~~~~~~
+
+- Drop python 3.7 support (`#40 <https://github.com/ethereum/eth-bloom/issues/40>`__)
+
+
+Internal Changes - for eth-bloom Contributors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Merge updates from the python project template (`#40 <https://github.com/ethereum/eth-bloom/issues/40>`__)
+
+
 2.0.0 (Nov. 28, 2022)
 ---------------------
 
