@@ -9,7 +9,7 @@ A python implementation of the bloom filter used by Ethereum.
 
 > This library and repository was previously located at https://github.com/pipermerriam/ethereum-bloom.  It was transferred to the Ethereum foundation github in November 2017 and renamed to `eth-bloom`.  The PyPi package was also renamed from `ethereum-bloom` to \`eth-bloom.
 
-Read more in the documentation below. [View the change log](https://github.com/ethereum/eth-bloom/blob/master/CHANGELOG.rst).
+Read more in the documentation below. [View the change log](https://github.com/ethereum/eth-bloom/blob/main/CHANGELOG.rst).
 
 For more information on what Ethereum Bloom Filters are see [here](what_is_eth-bloom.txt).
 
@@ -158,7 +158,7 @@ The version format for this repo is `{major}.{minor}.{patch}` for stable, and
 
 To issue the next version in line, specify which part to bump,
 like `make release bump=minor` or `make release bump=devnum`. This is typically done from the
-master branch, except when releasing a beta (in which case the beta is released from master,
+main branch, except when releasing a beta (in which case the beta is released from main,
 and the previous stable branch is released from said branch).
 
 If you are in a beta version, `make release bump=stage` will switch to a stable.
