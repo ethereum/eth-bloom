@@ -4,13 +4,13 @@
 [![Build Status](https://circleci.com/gh/ethereum/eth-bloom.svg?style=shield)](https://circleci.com/gh/ethereum/eth-bloom)
 [![PyPI version](https://badge.fury.io/py/eth-bloom.svg)](https://badge.fury.io/py/eth-bloom)
 [![Python versions](https://img.shields.io/pypi/pyversions/eth-bloom.svg)](https://pypi.python.org/pypi/eth-bloom)
+[![Docs build](https://readthedocs.org/projects/eth-bloom/badge/?version=latest)](https://eth-bloom.readthedocs.io/en/latest/?badge=latest)
 
 A python implementation of the bloom filter used by Ethereum.
 
 > This library and repository was previously located at https://github.com/pipermerriam/ethereum-bloom.  It was transferred to the Ethereum foundation github in November 2017 and renamed to `eth-bloom`.  The PyPi package was also renamed from `ethereum-bloom` to \`eth-bloom.
 
-Read more in the documentation below. [View the change log](https://github.com/ethereum/eth-bloom/blob/main/CHANGELOG.rst).
-
+Read more in the [documentation on ReadTheDocs](https://eth-bloom.readthedocs.io/). [View the change log](https://eth-bloom.readthedocs.io/en/latest/release_notes.html).
 For more information on what Ethereum Bloom Filters are see [here](what_is_eth-bloom.txt).
 
 ## Quickstart

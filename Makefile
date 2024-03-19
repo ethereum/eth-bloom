@@ -33,27 +33,47 @@ lint:
 test:
 	pytest tests
 
-docs:
+build-docs:
+	sphinx-apidoc -o docs/ . setup.py "*conftest*"
+	$(MAKE) -C docs clean
+	$(MAKE) -C docs html
+	$(MAKE) -C docs doctest
+
+build-docs-ci:
+	$(MAKE) -C docs latexpdf
+	$(MAKE) -C docs epub
+
+validate-newsfragments:
 	python ./newsfragments/validate_files.py
 	towncrier build --draft --version preview
+
+check-docs: build-docs validate-newsfragments
+
+check-docs-ci: build-docs build-docs-ci validate-newsfragments
+
+docs: check-docs
+	open docs/_build/html/index.html
+
+linux-docs: check-docs
+	xdg-open docs/_build/html/index.html
 
 check-bump:
 ifndef bump
 	$(error bump must be set, typically: major, minor, patch, or devnum)
 endif
 
-notes: check-bump
+notes: check-bump validate-newsfragments
 	# Let UPCOMING_VERSION be the version that is used for the current bump
 	$(eval UPCOMING_VERSION=$(shell bumpversion $(bump) --dry-run --list | grep new_version= | sed 's/new_version=//g'))
 	# Now generate the release notes to have them included in the release commit
 	towncrier build --yes --version $(UPCOMING_VERSION)
 	# Before we bump the version, make sure that the towncrier-generated docs will build
-	make docs
-	git commit -m "Compile release notes"
+	make build-docs
+	git commit -m "Compile release notes for v$(UPCOMING_VERSION)"
 
 release: check-bump clean
 	# require that upstream is configured for ethereum/eth-bloom
-	git remote -v | grep "upstream\tgit@github.com:ethereum/eth-bloom.git (push)\|upstream\thttps://github.com/ethereum/eth-bloom (push)"
+	@git remote -v | grep -E "upstream\tgit@github.com:ethereum/eth-bloom.git \(push\)|upstream\thttps://(www.)?github.com/ethereum/eth-bloom \(push\)"
 	# verify that docs build correctly
 	./newsfragments/validate_files.py is-empty
 	make docs
