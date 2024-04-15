@@ -1,7 +1,3 @@
-from __future__ import (
-    absolute_import,
-)
-
 import numbers
 import operator
 from typing import (
