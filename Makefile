@@ -10,7 +10,6 @@ help:
 	@echo "docs - view draft of newsfragments to be added to CHANGELOG"
 	@echo "notes - consume towncrier newsfragments/ and update CHANGELOG"
 	@echo "release - package and upload a release (does not run notes target)"
-	@echo "dist - package"
 
 clean: clean-build clean-pyc
 
@@ -31,7 +30,7 @@ lint:
 	)
 
 test:
-	pytest tests
+	python -m pytest tests
 
 docs:
 	python ./newsfragments/validate_files.py
@@ -49,11 +48,11 @@ notes: check-bump
 	towncrier build --yes --version $(UPCOMING_VERSION)
 	# Before we bump the version, make sure that the towncrier-generated docs will build
 	make docs
-	git commit -m "Compile release notes"
+	git commit -m "Compile release notes for v$(UPCOMING_VERSION)"
 
 release: check-bump clean
 	# require that upstream is configured for ethereum/eth-bloom
-	git remote -v | grep "upstream\tgit@github.com:ethereum/eth-bloom.git (push)\|upstream\thttps://github.com/ethereum/eth-bloom (push)"
+	@git remote -v | grep "upstream[[:space:]]git@github.com:ethereum/eth-bloom.git (push)\|upstream[[:space:]]https://github.com/ethereum/eth-bloom (push)"
 	# verify that docs build correctly
 	./newsfragments/validate_files.py is-empty
 	make docs
@@ -64,7 +63,3 @@ release: check-bump clean
 	python -m build
 	twine upload dist/*
 	git config commit.gpgSign "$(CURRENT_SIGN_SETTING)"
-
-dist: clean
-	python -m build
-	ls -l dist
