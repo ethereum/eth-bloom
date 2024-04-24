@@ -34,7 +34,7 @@ with open("./README.md") as readme:
 setup(
     name="eth-bloom",
     # *IMPORTANT*: Don't manually change the version here. Use the 'bumpversion' utility.
-    version="3.0.0",
+    version="3.0.1",
     description="""A python implementation of the bloom filter used by Ethereum""",
     long_description=long_description,
     long_description_content_type="text/markdown",
