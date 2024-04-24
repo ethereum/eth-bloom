@@ -1,3 +1,19 @@
+eth-bloom v3.0.1 (2024-04-24)
+-----------------------------
+
+Internal Changes - for eth-bloom Contributors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Change the name of ``master`` branch to ``main`` (`#41 <https://github.com/ethereum/eth-bloom/issues/41>`__)
+- Merge template updates, notably adding python 3.12 support (`#44 <https://github.com/ethereum/eth-bloom/issues/44>`__)
+
+
+Miscellaneous Changes
+~~~~~~~~~~~~~~~~~~~~~
+
+- `#45 <https://github.com/ethereum/eth-bloom/issues/45>`__
+
+
 eth-bloom v3.0.0 (2023-10-30)
 -----------------------------
 
