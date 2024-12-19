@@ -42,32 +42,9 @@ test:
 
 # docs commands
 
-docs: check-docs
+docs:
 	python ./newsfragments/validate_files.py
 	towncrier build --draft --version preview
-
-linux-docs: check-docs
-	xdg-open docs/_build/html/index.html
-
-# docs helpers
-
-validate-newsfragments:
-	python ./newsfragments/validate_files.py
-	towncrier build --draft --version preview
-
-check-docs: build-docs validate-newsfragments
-
-build-docs:
-	sphinx-apidoc -o docs/ . setup.py "*conftest*"
-	$(MAKE) -C docs clean
-	$(MAKE) -C docs html
-	$(MAKE) -C docs doctest
-
-check-docs-ci: build-docs build-docs-ci validate-newsfragments
-
-build-docs-ci:
-	$(MAKE) -C docs latexpdf
-	$(MAKE) -C docs epub
 
 # release commands
 
@@ -103,8 +80,8 @@ ifndef bump
 endif
 
 check-git:
-	# require that upstream is configured for ethereum/<REPO_NAME>
-	@if ! git remote -v | grep "upstream[[:space:]]git@github.com:ethereum/<REPO_NAME>.git (push)\|upstream[[:space:]]https://github.com/ethereum/<REPO_NAME> (push)"; then \
-		echo "Error: You must have a remote named 'upstream' that points to '<REPO_NAME>'"; \
+	# require that upstream is configured for ethereum/eth-bloom
+	@if ! git remote -v | grep "upstream[[:space:]]git@github.com:ethereum/eth-bloom.git (push)\|upstream[[:space:]]https://github.com/ethereum/eth-bloom (push)"; then \
+		echo "Error: You must have a remote named 'upstream' that points to 'eth-bloom'"; \
 		exit 1; \
 	fi

@@ -1,0 +1,1 @@
+Merge template, including adding support for py313 and replacing ``bumpversion`` with ``bumpmyversion``.

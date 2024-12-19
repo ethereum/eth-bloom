@@ -13,8 +13,6 @@ Read more in the documentation below. [View the change log](https://github.com/e
 
 For more information on what Ethereum Bloom Filters are see [here](what_is_eth-bloom.txt).
 
-View the [change log](https://<RTD_NAME>.readthedocs.io/en/latest/release_notes.html).
-
 ## Installation
 
 ```sh
