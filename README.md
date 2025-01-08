@@ -13,7 +13,7 @@ Read more in the documentation below. [View the change log](https://github.com/e
 
 For more information on what Ethereum Bloom Filters are see [here](what_is_eth-bloom.txt).
 
-## Quickstart
+## Installation
 
 ```sh
 python -m pip install eth-bloom
