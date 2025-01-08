@@ -1,3 +1,12 @@
+eth-bloom v3.1.0 (2025-01-08)
+-----------------------------
+
+Features
+~~~~~~~~
+
+- Merge template, including adding support for py313 and replacing ``bumpversion`` with ``bumpmyversion``. (`#48 <https://github.com/ethereum/eth-bloom/issues/48>`__)
+
+
 eth-bloom v3.0.1 (2024-04-24)
 -----------------------------
 
